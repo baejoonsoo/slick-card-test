@@ -1,35 +1,33 @@
+import { useState } from "react";
 import styled from "styled-components";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  centerMode: true,
-  slidesToShow: 3,
-  autoplay: true,
-  arrows: false,
-  slidesToScroll: 1,
-  centerPadding: "0px",
-};
+const CARD_LIST = [1, 2, 3, 4, 5];
 
 function App() {
-  return (
-    <Container>
-      <StyleSlider {...settings}>
-        <Item>1</Item>
-        <Item>2</Item>
-        <Item>3</Item>
-        <Item>4</Item>
-        <Item>5</Item>
-        <Item>6</Item>
-        <Item>7</Item>
-        <Item>8</Item>
-      </StyleSlider>
-    </Container>
-  );
+  const [count, setCount] = useState<number>(3);
+  const [cardList, setCardList] = useState<number[]>([]);
+
+  const getCardList = () => {
+    const cards = [count];
+
+    cards.push((count + 1) % CARD_LIST.length);
+    cards.push((count + 2) % CARD_LIST.length);
+
+    const unSiiftNum1 = (count - 1) % CARD_LIST.length;
+    cards.unshift(
+      unSiiftNum1 >= 0 ? unSiiftNum1 : CARD_LIST.length + unSiiftNum1 + 1
+    );
+    const unSiiftNum2 = (count - 2) % CARD_LIST.length;
+    cards.unshift(
+      unSiiftNum2 >= 0 ? unSiiftNum2 : CARD_LIST.length + unSiiftNum2 + 1
+    );
+
+    console.log(cards);
+  };
+
+  getCardList();
+
+  return <Container></Container>;
 }
 
 export default App;
@@ -42,17 +40,10 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const StyleSlider = styled(Slider)`
-  width: 1000px;
-`;
-
-const Item = styled.div`
-  background-image: url("logo192.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  border: 1px black solid;
-
-  width: 300px;
-  height: 100px;
-  color: red;
+const Card = styled.div`
+  background-color: bisque;
+  height: 300px;
+  border: black 1px solid;
+  width: 200px;
+  border-radius: 10px;
 `;
