@@ -23,6 +23,8 @@ function App() {
     );
 
     console.log(cards);
+
+    setCardList(cards);
   };
 
   getCardList();
