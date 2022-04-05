@@ -43,9 +43,9 @@ function App() {
       <button onClick={addCount}>add</button>
       <button onClick={delCount}>d</button>
       <Container>
-        {cardList.map((card) => (
-          <Card key={card}>{card}</Card>
-        ))}
+        <Card className="pre">{cardList[0]}</Card>
+        <Card>{cardList[1]}</Card>
+        <Card className="next">{cardList[2]}</Card>
       </Container>
     </div>
   );
@@ -67,4 +67,24 @@ const Card = styled.div`
   border: black 1px solid;
   width: 200px;
   border-radius: 10px;
+  z-index: 2;
+
+  font-size: 40px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+
+  &.pre,
+  &.next {
+    z-index: 1;
+    transform: scale(0.9);
+  }
+
+  &.pre {
+    margin-right: -90px;
+  }
+
+  &.next {
+    margin-left: -90px;
+  }
 `;
