@@ -7,7 +7,9 @@ function App() {
   const [count, setCount] = useState<number>(0);
   const [cardList, setCardList] = useState<number[]>([]);
 
-  const preRef = useRef<HTMLDivElement>(null);
+  const preCardRef = useRef<HTMLDivElement>(null);
+  const centerCardRef = useRef<HTMLDivElement>(null);
+  const nextCardRef = useRef<HTMLDivElement>(null);
 
   const getCardList = () => {
     const cards = [count];
@@ -28,22 +30,37 @@ function App() {
     setCount(1);
   }, []);
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if (centerCardRef && centerCardRef.current) {
+  //       centerCardRef.current.style.transform = ``;
+  //     }
+  //   }, 500);
+  // }, [cardList]);
+
+  const showNextCardList = () => {
+    if (centerCardRef && centerCardRef.current) {
+      // centerCardRef.current.style.transform = `translateX(-112px)`;
+    }
+  };
+
+  const showPreCardList = () => {
+    if (centerCardRef && centerCardRef.current) {
+      // centerCardRef.current.style.transform = `translateX(112px)`;
+    }
+  };
+
   const addCount = () => {
     setCount((prev) => {
       return prev === CARD_LIST.length - 1 ? 0 : prev + 1;
     });
-    a();
+    showNextCardList();
     getCardList();
-  };
-
-  const a = () => {
-    if (preRef && preRef.current) {
-      preRef.current.style.transform = `translateX(-112px)`;
-    }
   };
 
   const delCount = () => {
     setCount((prev) => (prev === 0 ? CARD_LIST.length - 1 : prev - 1));
+    showPreCardList();
     getCardList();
   };
 
@@ -52,11 +69,15 @@ function App() {
       <button onClick={addCount}>add</button>
       <button onClick={delCount}>d</button>
       <Container>
-        <Card id="pre">{cardList[0]}</Card>
-        <Card ref={preRef} id="center">
+        <Card ref={preCardRef} id="pre">
+          {cardList[0]}
+        </Card>
+        <Card ref={centerCardRef} id="center">
           {cardList[1]}
         </Card>
-        <Card id="next">{cardList[2]}</Card>
+        <Card ref={nextCardRef} id="next">
+          {cardList[2]}
+        </Card>
       </Container>
     </div>
   );
