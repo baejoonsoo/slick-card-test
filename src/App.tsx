@@ -31,7 +31,10 @@ function App() {
       return prev === CARD_LIST.length - 1 ? 0 : prev + 1;
     });
     getCardList();
+    a();
   };
+
+  const a = () => {};
 
   const delCount = () => {
     setCount((prev) => (prev === 0 ? CARD_LIST.length - 1 : prev - 1));
@@ -43,9 +46,9 @@ function App() {
       <button onClick={addCount}>add</button>
       <button onClick={delCount}>d</button>
       <Container>
-        <Card className="pre">{cardList[0]}</Card>
-        <Card>{cardList[1]}</Card>
-        <Card className="next">{cardList[2]}</Card>
+        <Card id="pre">{cardList[0]}</Card>
+        <Card id="center">{cardList[1]}</Card>
+        <Card id="next">{cardList[2]}</Card>
       </Container>
     </div>
   );
@@ -74,17 +77,17 @@ const Card = styled.div`
   align-items: center;
   display: flex;
 
-  &.pre,
-  &.next {
+  &#pre,
+  &#next {
     z-index: 1;
     background-color: #b3b3b3;
   }
 
-  &.pre {
+  &#pre {
     margin-right: -90px;
   }
 
-  &.next {
+  &#next {
     margin-left: -90px;
   }
 `;
