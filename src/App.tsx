@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 const CARD_LIST = [1, 2, 3, 4, 5];
@@ -6,6 +6,8 @@ const CARD_LIST = [1, 2, 3, 4, 5];
 function App() {
   const [count, setCount] = useState<number>(0);
   const [cardList, setCardList] = useState<number[]>([]);
+
+  const preRef = useRef<HTMLDivElement>(null);
 
   const getCardList = () => {
     const cards = [count];
@@ -30,11 +32,15 @@ function App() {
     setCount((prev) => {
       return prev === CARD_LIST.length - 1 ? 0 : prev + 1;
     });
-    getCardList();
     a();
+    getCardList();
   };
 
-  const a = () => {};
+  const a = () => {
+    if (preRef && preRef.current) {
+      preRef.current.style.transform = `translateX(-112px)`;
+    }
+  };
 
   const delCount = () => {
     setCount((prev) => (prev === 0 ? CARD_LIST.length - 1 : prev - 1));
@@ -47,7 +53,9 @@ function App() {
       <button onClick={delCount}>d</button>
       <Container>
         <Card id="pre">{cardList[0]}</Card>
-        <Card id="center">{cardList[1]}</Card>
+        <Card ref={preRef} id="center">
+          {cardList[1]}
+        </Card>
         <Card id="next">{cardList[2]}</Card>
       </Container>
     </div>
@@ -77,6 +85,7 @@ const Card = styled.div`
   align-items: center;
   display: flex;
 
+  transition: 0.5s ease-in-out;
   &#pre,
   &#next {
     z-index: 1;
