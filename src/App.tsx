@@ -27,7 +27,7 @@ function App() {
     setCardList(cards);
   };
 
-  getCardList();
+  // getCardList();
 
   return <Container></Container>;
 }
