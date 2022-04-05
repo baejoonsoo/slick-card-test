@@ -1,35 +1,54 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const CARD_LIST = [1, 2, 3, 4, 5];
 
 function App() {
-  const [count, setCount] = useState<number>(3);
+  const [count, setCount] = useState<number>(0);
   const [cardList, setCardList] = useState<number[]>([]);
 
   const getCardList = () => {
     const cards = [count];
 
     cards.push((count + 1) % CARD_LIST.length);
-    cards.push((count + 2) % CARD_LIST.length);
 
     const unSiiftNum1 = (count - 1) % CARD_LIST.length;
     cards.unshift(
-      unSiiftNum1 >= 0 ? unSiiftNum1 : CARD_LIST.length + unSiiftNum1 + 1
-    );
-    const unSiiftNum2 = (count - 2) % CARD_LIST.length;
-    cards.unshift(
-      unSiiftNum2 >= 0 ? unSiiftNum2 : CARD_LIST.length + unSiiftNum2 + 1
+      unSiiftNum1 >= 0 ? unSiiftNum1 : CARD_LIST.length + unSiiftNum1
     );
 
     console.log(cards);
-
     setCardList(cards);
   };
 
-  // getCardList();
+  useEffect(() => {
+    getCardList();
+    setCount(1);
+  }, []);
 
-  return <Container></Container>;
+  const addCount = () => {
+    setCount((prev) => {
+      return prev === CARD_LIST.length - 1 ? 0 : prev + 1;
+    });
+    getCardList();
+  };
+
+  const delCount = () => {
+    setCount((prev) => (prev === 0 ? CARD_LIST.length - 1 : prev - 1));
+    getCardList();
+  };
+
+  return (
+    <div>
+      <button onClick={addCount}>add</button>
+      <button onClick={delCount}>d</button>
+      <Container>
+        {cardList.map((card) => (
+          <Card key={card}>{card}</Card>
+        ))}
+      </Container>
+    </div>
+  );
 }
 
 export default App;
