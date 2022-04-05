@@ -62,7 +62,7 @@ const Container = styled.div`
 `;
 
 const Card = styled.div`
-  background-color: bisque;
+  background-color: white;
   height: 300px;
   border: black 1px solid;
   width: 200px;
@@ -77,7 +77,7 @@ const Card = styled.div`
   &.pre,
   &.next {
     z-index: 1;
-    transform: scale(0.9);
+    background-color: #b3b3b3;
   }
 
   &.pre {
