@@ -1,10 +1,22 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
 
-const list = [1, 2, 3, 4, 5];
+const list = [
+  "../card1.png",
+  "../card2.png",
+  "../card3.png",
+  "../card4.png",
+  "../card5.png",
+];
 
 export default function App() {
-  const [tempList, setTempList] = useState([4, 5, 1, 2, 3]);
+  const [tempList, setTempList] = useState([
+    "../card4.png",
+    "../card5.png",
+    "../card1.png",
+    "../card2.png",
+    "../card3.png",
+  ]);
 
   const before = () => {
     const temp = tempList;
@@ -16,7 +28,7 @@ export default function App() {
 
   const after = () => {
     const temp = tempList;
-    const start = temp.shift() ?? -1;
+    const start = temp.shift() ?? "";
     temp.splice(temp.length, 0, start);
     setTempList([...temp]);
   };
@@ -26,15 +38,14 @@ export default function App() {
       <button onClick={before}>뒤로</button>
       <button onClick={after}>앞으로</button>
       <Cards>
-        {list.map((_, index) => (
+        {list.map((data, index) => (
           <Card
             key={index}
             // style={{ marginLeft: `${tempList.indexOf(_) * 100}px` }}
-            index={tempList.indexOf(_)}
+            index={tempList.indexOf(data)}
             len={Math.floor(list.length / 2)}
-          >
-            {_}
-          </Card>
+            bg={data}
+          ></Card>
         ))}
       </Cards>
     </Wrap>
@@ -50,23 +61,26 @@ const Wrap = styled.div`
 `;
 
 const Card = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 290px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid grey;
   position: absolute;
   margin-top: 100px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   transition: 0.5s;
 
-  ${({ index, len }: { index: number; len: number }) => {
+  ${({ index, len, bg }: { index: number; len: number; bg: string }) => {
     console.log(index, len);
     return css`
       margin-left: ${len + 1 >= index && len - 1 <= index
-        ? index * 100
-        : len * 100}px;
+        ? index * 210
+        : len * 210}px;
       opacity: ${len + 1 >= index && len - 1 <= index ? "1" : "0"};
+      background-image: url(${bg});
     `;
   }}
 `;
