@@ -1,7 +1,7 @@
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-let list = [1, 2, 3, 4, 5];
+const list = [1, 2, 3, 4, 5];
 
 export default function App() {
   const [tempList, setTempList] = useState([4, 5, 1, 2, 3]);
@@ -25,14 +25,18 @@ export default function App() {
     <Wrap>
       <button onClick={before}>뒤로</button>
       <button onClick={after}>앞으로</button>
-      {list.map((_, index) => (
-        <Card
-          key={index}
-          style={{ marginLeft: `${tempList.indexOf(_) * 100}px` }}
-        >
-          {_}
-        </Card>
-      ))}
+      <Cards>
+        {list.map((_, index) => (
+          <Card
+            key={index}
+            // style={{ marginLeft: `${tempList.indexOf(_) * 100}px` }}
+            index={tempList.indexOf(_)}
+            len={Math.floor(list.length / 2)}
+          >
+            {_}
+          </Card>
+        ))}
+      </Cards>
     </Wrap>
   );
 }
@@ -55,4 +59,18 @@ const Card = styled.div`
   position: absolute;
   margin-top: 100px;
   transition: 0.5s;
+
+  ${({ index, len }: { index: number; len: number }) => {
+    console.log(index, len);
+    return css`
+      margin-left: ${len + 1 >= index && len - 1 <= index
+        ? index * 100
+        : len * 100}px;
+      opacity: ${len + 1 >= index && len - 1 <= index ? "1" : "0"};
+    `;
+  }}
+`;
+
+const Cards = styled.div`
+  width: 300px;
 `;
