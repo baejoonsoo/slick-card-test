@@ -62,7 +62,7 @@ const Wrap = styled.div`
 
 const Card = styled.div`
   width: 200px;
-  height: 290px;
+  height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
